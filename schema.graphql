@@ -1,0 +1,1721 @@
+type Query {
+  """
+  Returns Event Type associated with the specified UUID.
+
+  Equivalent to GET /event_types/{uuid}
+  """
+  eventType(uuid: String!): EventTypeResource
+
+  """
+  Returns all Event Types associated with a specified User. Use:
+
+  * `organization` to look up all Event Types that belong to the organization
+
+  * `user` to look up a user's Event Types in an organization
+
+  Either `organization` or `user` are required query params when using this endpoint.
+
+  Equivalent to GET /event_types
+  """
+  eventTypes(
+    """
+    The number of rows to return
+    """
+    count: Float
+
+    """
+    View available personal, team, and organization event types associated with the organization's URI.
+    """
+    organization: String
+
+    """
+    The token to pass to get the next portion of the collection
+    """
+    page_token: String
+
+    """
+    Order results by the specified field and direction. Accepts comma-separated list of {field}:{direction} values.
+    Supported fields are: name.
+    Sort direction is specified as: asc, desc.
+    """
+    sort: String
+
+    """
+    View available personal, team, and organization event types associated with the user's URI.
+    """
+    user: String
+  ): EventTypes
+
+  """
+  Returns an Organization Invitation that was sent to the organization's members.
+
+  Equivalent to GET /organizations/{org_uuid}/invitations/{uuid}
+  """
+  organizationInvitation(
+    """
+    The organization’s unique identifier
+    """
+    organization_uuid: String!
+
+    """
+    The organization invitation's unique identifier
+    """
+    invitation_uuid: String!
+  ): OrganizationInvitationResource
+
+  """
+  Returns a list of Organization Invitations that were sent to the organization's members.
+
+  Equivalent to GET /organizations/{uuid}/invitations
+  """
+  organizationInvitations(
+    """
+    The number of rows to return
+    """
+    count: Float
+
+    """
+    Indicates if the results should be filtered by email address
+    """
+    email: String
+
+    """
+    The token to pass to get the next portion of the collection
+    """
+    page_token: String
+
+    """
+    Order results by the field name and direction specified (ascending or descending). Returns multiple sets of results in a comma-separated list.
+    """
+    sort: String
+
+    """
+    Indicates if the results should be filtered by status  ("pending", "accepted", or "declined")
+    """
+    status: OrganizationInvitationStatus
+
+    """
+    The organization's unique identifier
+    """
+    organization_uuid: String!
+  ): OrganizationInvitations
+
+  """
+  Returns information about a user's Organization Membership
+
+  Equivalent to GET /organization_memberships/{uuid}
+  """
+  organizationMembership(
+    """
+    The organization membership's unique identifier
+    """
+    uuid: String!
+  ): OrganizationMembershipResource
+
+  """
+  Use this to list the Organization Memberships for all users belonging to an organization, use:
+
+  * `user` to look up a user's membership in an organization
+
+  * `organization` to look up all users that belong to the organization
+
+  This endpoint can also be used to retrieve your organization uuid.
+
+  Equivalent to GET /organization_memberships
+  """
+  organizationMemberships(
+    """
+    The number of rows to return
+    """
+    count: Float
+
+    """
+    Indicates if the results should be filtered by email address
+    """
+    email: String
+
+    """
+    Indicates if the results should be filtered by organization
+    """
+    organization: String
+
+    """
+    The token to pass to get the next portion of the collection
+    """
+    page_token: String
+
+    """
+    Indicates if the results should be filtered by user
+    """
+    user: String
+  ): OrganizationMemberships
+
+  """
+  Returns information about an Event associated with a URI.
+
+  Equivalent to GET /scheduled_events/{uuid}
+  """
+  scheduledEvent(
+    """
+    The event's unique identifier
+    """
+    uuid: String!
+  ): ScheduledEventResource
+
+  """
+  Returns information about an Invitee (person invited to an event) associated with a URI.
+
+  Equivalent to GET /scheduled_events/{event_uuid}/invitees/{invitee_uuid}
+  """
+  scheduledEventInvitee(
+    """
+    The event's unique identifier
+    """
+    event_uuid: String!
+
+    """
+    The invitee's unique identifier
+    """
+    invitee_uuid: String!
+  ): ScheduledEventInviteeResource
+
+  """
+  Returns a list of Invitees for an event.
+
+  Equivalent to GET /scheduled_events/{uuid}/invitees
+  """
+  scheduledEventInvitees(
+    """
+    The number of rows to return
+    """
+    count: Float
+
+    """
+    Indicates if the results should be filtered by email address
+    """
+    email: String
+
+    """
+    The token to pass to get the next portion of the collection
+    """
+    page_token: String
+
+    """
+    Order results by the **created_at** field and direction specified: ascending ("asc") or descending ("desc")
+    """
+    sort: String
+
+    """
+    Indicates if the invitee "canceled" or still "active"
+    """
+    status: EventStatus
+    event_uuid: String!
+  ): ScheduledEventInvitees
+
+  """
+  Returns a list of  Events.
+
+  * Pass `organization` parameter to return events for that organization (requires admin/owner privilege)
+  * Pass `user` parameter to return events for a specific User
+
+  **NOTES:**
+  * If you are the admin/owner of the organization, you can use both `organization` and `user` to get a list of events for a specific user within your organization.
+
+  * `user` can only be used alone when requesting your own personal events. This will return your events within any organization that you are currently in or were a part of in the past.
+
+  Equivalent to GET /scheduled_events
+  """
+  scheduledEvents(
+    """
+    The number of rows to return
+    """
+    count: Float
+
+    """
+    Return events that are scheduled with the invitee associated with this email address
+    """
+    invitee_email: String
+
+    """
+    Include events with start times prior to this time (sample time format: "2020-01-02T03:04:05.678Z"). This time should use the UTC timezone.
+    """
+    max_start_time: String
+
+    """
+    Include events with start times after this time (sample time format: "2020-01-02T03:04:05.678Z"). This time should use the UTC timezone.
+    """
+    min_start_time: String
+
+    """
+    Return events that are scheduled with the organization associated with this URI
+    """
+    organization: String
+
+    """
+    The token to pass to get the next portion of the collection
+    """
+    page_token: String
+
+    """
+    Order results by the specified field and direction. Accepts comma-separated list of {field}:{direction} values.
+    Supported fields are: start_time.
+    Sort direction is specified as: asc, desc.
+    """
+    sort: String
+
+    """
+    Whether the scheduled event is `active` or `canceled`
+    """
+    status: EventStatus
+
+    """
+    Return events that are scheduled with the user associated with this URI
+    """
+    user: String
+  ): ScheduledEvents
+
+  """
+  Returns information about a specified User.
+
+  Equivalent to GET /users/{uuid}
+  """
+  user(
+    """
+    User unique identifier, or the constant "me" to reference the caller
+    """
+    uuid: String!
+  ): UserResource
+
+  """
+  Returns basic information about your user account.
+
+  Equivalent to GET /users/me
+  """
+  usersMe: UserResource
+
+  """
+  Get a Webhook Subscription for an Organization or User with a specified UUID.
+
+  Equivalent to GET /webhook_subscriptions/{webhook_uuid}
+  """
+  webhookSubscription(uuid: String!): WebhookSubscriptionResource
+
+  """
+  Get a list of Webhook Subscriptions for an Organization or User with a UUID.
+
+  Equivalent to GET /webhook_subscriptions
+  """
+  webhookSubscriptions(
+    """
+    The number of rows to return
+    """
+    count: Float
+
+    """
+    Indicates if the results should be filtered by organization
+    """
+    organization: String!
+
+    """
+    The token to pass to get the next portion of the collection
+    """
+    page_token: String
+
+    """
+    Filter the list by organization or user
+    """
+    scope: WebhookSubscriptionScope!
+
+    """
+    Order results by the specified field and direction. Accepts comma-separated list of {field}:{direction} values.
+    Supported fields are: created_at.
+    Sort direction is specified as: asc, desc.
+    """
+    sort: String
+
+    """
+    Indicates if the results should be filtered by user. This parameter is only required if the `scope` parameter is set to `user`.
+    """
+    user: String
+  ): WebhookSubscriptions
+}
+
+type EventTypeResource {
+  """
+  A configuration for an Event
+  """
+  resource: EventType
+}
+
+"""
+A configuration for an Event
+"""
+type EventType {
+  """
+  Indicates if the event is active or not.
+  """
+  active: Boolean!
+
+  """
+  The hexadecimal color value of the event type's scheduling page
+  """
+  color: String!
+
+  """
+  The moment the event type was created (e.g. "2020-01-02T03:04:05.678Z")
+  """
+  created_at: String!
+  custom_questions: [CustomQuestion]!
+
+  """
+  The event type's description (formatted with HTML)
+  """
+  description_html: String!
+
+  """
+  The event type's description (in non formatted text)
+  """
+  description_plain: String!
+
+  """
+  The length of sessions booked with this event type
+  """
+  duration: Float!
+
+  """
+  Contents of a note that may be associated with the event type
+  """
+  internal_note: String!
+
+  """
+  Indicates if the event type is "solo" (belongs to an individual user) or "group"
+  """
+  kind: Kind!
+
+  """
+  The event type name (in human-readable format)
+  """
+  name: String!
+
+  """
+  Indicates if the event type is "round robin" (alternates between hosts) or "collective" (invitees pick a time when all participants are available) or "null" (the event type doesn’t consider the availability of a group participants)
+  """
+  pooling_type: PoolingType!
+
+  """
+  The profile of the User that's associated with the Event Type (note: some event types don't have user profiles)
+  """
+  profile: Profile!
+
+  """
+  The URL of the user’s scheduling site where invitees book this event type
+  """
+  scheduling_url: String!
+
+  """
+  Indicates if the event type is hidden on the owner's main scheduling page
+  """
+  secret: Boolean!
+
+  """
+  The portion of the event type's URL that identifies a specific web page (in a human-readable format)
+  """
+  slug: String!
+
+  """
+  Indicates if the event type is "AdhocEventType" (ad hoc event) or "StandardEventType" (standard event type)
+  """
+  type: EventTypeType!
+
+  """
+  The moment the event type was last updated (e.g. "2020-01-02T03:04:05.678Z")
+  """
+  updated_at: String!
+
+  """
+  Canonical reference (unique identifier) for the event type
+  """
+  uri: String!
+}
+
+"""
+
+"""
+type CustomQuestion {
+  """
+  The invitee’s option(s) for single_select or multi_select type of responses.
+  """
+  answer_choices: [String]!
+
+  """
+  true if the question created by the host is turned ON and visible on the event booking page; false if turned OFF and invisible on the event booking page.
+  """
+  enabled: Boolean!
+
+  """
+  true if the custom question lets invitees record a written response in addition to single-select or multiple-select type of responses; false if it doesn’t.
+  """
+  include_other: Boolean!
+
+  """
+  The custom question that the host created for the event type.
+  """
+  name: String!
+
+  """
+  The numerical position of the question on the event booking page after the name and email address fields.
+  """
+  position: Float!
+
+  """
+  true if a response to the question created by the host is required for invitees to book the event type; false if not required.
+  """
+  required: Boolean!
+
+  """
+  The type of response that the invitee provides to the custom question; can be one or multiple lines of text, a phone number, or single- or multiple-select.
+  """
+  type: CustomQuestionType!
+}
+
+enum CustomQuestionType {
+  STRING
+  TEXT
+  PHONE_NUMBER
+  SINGLE_SELECT
+  MULTI_SELECT
+}
+
+enum Kind {
+  SOLO
+  GROUP
+}
+
+enum PoolingType {
+  ROUND_ROBIN
+  COLLECTIVE
+}
+
+"""
+The profile of the User that's associated with the Event Type (note: some event types don't have user profiles)
+"""
+type Profile {
+  """
+  Human-readable name for the profile of the user that's associated with the event type
+  """
+  name: String!
+
+  """
+  The unique reference to the user associated with the profile
+  """
+  owner: String!
+
+  """
+  Indicates if the profile belongs to a "user" (individual) or "team"
+  """
+  type: ProfileType!
+}
+
+enum ProfileType {
+  USER
+  TEAM
+}
+
+enum EventTypeType {
+  STANDARDEVENTTYPE
+  ADHOCEVENTTYPE
+}
+
+"""
+Service response
+"""
+type EventTypes {
+  collection: [EventType]!
+  pagination: Pagination!
+}
+
+type Pagination {
+  """
+  The number of rows to return
+  """
+  count: Float!
+
+  """
+  Return the next page of an ordered list ("null" indicates no additional results are available)
+  """
+  next_page: String
+}
+
+type OrganizationInvitationResource {
+  """
+  Organization Invitation object
+  """
+  resource: OrganizationInvitation
+}
+
+"""
+Organization Invitation object
+"""
+type OrganizationInvitation {
+  """
+  The moment the invitation was created (e.g. “2020-01-02T03:04:05.678Z")
+  """
+  created_at: String!
+
+  """
+  The email address of the person who was invited to join the organization
+  """
+  email: String!
+
+  """
+  The moment the invitation was last sent (e.g. "2020-01-02T03:04:05.678Z")
+  """
+  lastSentAt: String!
+
+  """
+  Canonical reference (unique identifier) for the organization
+  """
+  organization: String!
+
+  """
+  The status of the invitation ("pending", "accepted", or "declined")
+  """
+  status: OrganizationInvitationStatus!
+
+  """
+  The moment the invitation was last updated (e.g. "2020-01-02T03:04:05.678Z")
+  """
+  updated_at: String!
+
+  """
+  Canonical reference (unique identifier) for the organization invitation
+  """
+  uri: String!
+
+  """
+  If the invitation was sent by a user, this is the unique reference to that user
+  """
+  user: String
+}
+
+enum OrganizationInvitationStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+}
+
+type OrganizationInvitations {
+  collection: [OrganizationInvitation]
+  pagination: Pagination
+}
+
+type OrganizationMembershipResource {
+  resource: OrganizationMembership
+}
+
+type OrganizationMembership {
+  """
+  The moment when the membership record was created (e.g. "2020-01-02T03:04:05.678Z")
+  """
+  created_at: String!
+
+  """
+  A unique reference to the organization
+  """
+  organization: String!
+
+  """
+  The user's role in the organization
+  """
+  role: Role!
+
+  """
+  The moment when the membership record was last updated (e.g. "2020-01-02T03:04:05.678Z")
+  """
+  updated_at: String!
+
+  """
+  Canonical reference (unique identifier) for the membership
+  """
+  uri: String!
+
+  """
+  Information about the user.
+  """
+  user: OrganizationMembershipUser!
+}
+
+enum Role {
+  USER
+  ADMIN
+  OWNER
+}
+
+"""
+Information about the user.
+"""
+type OrganizationMembershipUser {
+  """
+  The URL of the user's avatar (image)
+  """
+  avatar_url: String
+
+  """
+  The moment when the user's record was created (e.g. "2020-01-02T03:04:05.678Z")
+  """
+  created_at: String!
+
+  """
+  The user's email address
+  """
+  email: String!
+
+  """
+  The user's name (human-readable format)
+  """
+  name: String!
+
+  """
+  The URL of the user's Calendly landing page (that lists all the user's event types)
+  """
+  scheduling_url: String!
+
+  """
+  The portion of URL for the user's scheduling page (where invitees book sessions), rendered in a human-readable format
+  """
+  slug: String!
+
+  """
+  The time zone offset to use when presenting time to the user
+  """
+  timezone: String!
+
+  """
+  The moment when the user's record was last updated (e.g. "2020-01-02T03:04:05.678Z")
+  """
+  updated_at: String!
+
+  """
+  Canonical reference (unique identifier) for the user
+  """
+  uri: String!
+}
+
+"""
+Service response
+"""
+type OrganizationMemberships {
+  collection: [OrganizationMembership]
+  pagination: Pagination
+}
+
+type ScheduledEventResource {
+  """
+  Information about a scheduled meeting
+  """
+  resource: ScheduledEvent
+}
+
+"""
+Information about a scheduled meeting
+"""
+type ScheduledEvent {
+  """
+  The moment when the event was created (e.g. "2020-01-02T03:04:05.678Z")
+  """
+  created_at: String!
+
+  """
+  The moment the event was scheduled to end in UTC time (e.g. "2020-01-02T03:04:05.678Z")
+  """
+  end_time: String!
+
+  """
+  Additional people added to an event by an invitee
+  """
+  event_guests: [EventGuest]!
+
+  """
+  Event membership list
+  """
+  event_memberships: [EventMembership]!
+
+  """
+  The event type associated with this event
+  """
+  event_type: String!
+  invitees_counter: InviteesCounter!
+
+  """
+  The polymorphic base type for an event location that Calendly supports
+  """
+  location: Location!
+
+  """
+  The event name
+  """
+  name: String!
+
+  """
+  The moment the event was scheduled to start in UTC time (e.g. "2020-01-02T03:04:05.678Z").
+  """
+  start_time: String!
+
+  """
+  Indicates if the event is "active" or "canceled"
+  """
+  status: EventStatus!
+
+  """
+  The moment when the event was last updated (e.g. "2020-01-02T03:04:05.678Z")
+  """
+  updated_at: String!
+
+  """
+  Canonical reference (unique identifier) for the resource
+  """
+  uri: String!
+
+  invitees(
+    """
+    The number of rows to return
+    """
+    count: Float
+
+    """
+    Indicates if the results should be filtered by email address
+    """
+    email: String
+
+    """
+    The token to pass to get the next portion of the collection
+    """
+    page_token: String
+
+    """
+    Order results by the **created_at** field and direction specified: ascending ("asc") or descending ("desc")
+    """
+    sort: String
+
+    """
+    Indicates if the invitee "canceled" or still "active"
+    """
+    status: EventStatus
+  ): ScheduledEventInvitees
+}
+
+"""
+An individual whom an invitee has invited to be a guest attendee to an event
+"""
+type EventGuest {
+  created_at: String!
+  email: String!
+  updated_at: String!
+}
+
+type EventMembership {
+  """
+  Canonical reference (unique identifier) for the user
+  """
+  user: String!
+}
+
+type InviteesCounter {
+  """
+  Total invitees for an event that have not canceled
+  """
+  active: Float!
+
+  """
+  Maximum number of active invitees that can book the event
+  """
+  limit: Float!
+
+  """
+  Total invitees for an event, including invitees that have canceled
+  """
+  total: Float!
+}
+
+"""
+The polymorphic base type for an event location that Calendly supports
+"""
+union Location =
+    InPersonMeeting
+  | OutboundCall
+  | InboundCall
+  | CustomLocation
+  | InviteeSpecifiedLocation
+  | GoogleConference
+  | ZoomConference
+  | GoToMeetingConference
+  | MicrosoftTeamsConference
+
+"""
+Information about the physical (in-person) event location
+"""
+type InPersonMeeting {
+  """
+  The physical location specified by the event host (publisher)
+  """
+  location: String!
+
+  """
+  Indicates that the event will be an in-person meeting.
+  """
+  type: InPersonMeetingType!
+}
+
+enum InPersonMeetingType {
+  PHYSICAL
+}
+
+"""
+Meeting publisher will call the Invitee
+"""
+type OutboundCall {
+  """
+  The phone number the event host (publisher) will use to call the invitee
+  """
+  location: String!
+
+  """
+  Indicates that the event host (publisher) will call the invitee
+  """
+  type: OutboundCallType!
+}
+
+enum OutboundCallType {
+  OUTBOUND_CALL
+}
+
+"""
+Invitee will call meeting publisher at the specified phone number
+"""
+type InboundCall {
+  """
+  The phone number the invitee will use to call the event host (publisher)
+  """
+  location: String!
+
+  """
+  Indicates that the invitee will call the event host
+  """
+  type: InboundCallType!
+}
+
+enum InboundCallType {
+  INBOUND_CALL
+}
+
+"""
+Use this to describe an existing Calendly-supported event location.
+"""
+type CustomLocation {
+  """
+  The location description provided by the event host (publisher)
+  """
+  location: String!
+
+  """
+  The event location doesn't fall into a standard category defined by the event host (publisher)
+  """
+  type: CustomLocationType!
+}
+
+enum CustomLocationType {
+  CUSTOM
+}
+
+"""
+Information about an event location that’s specified by the invitee.
+"""
+type InviteeSpecifiedLocation {
+  """
+  The event location description provided by the invitee
+  """
+  location: String!
+
+  """
+  The event location selected by the invitee
+  """
+  type: InviteeSpecifiedLocationType!
+}
+
+enum InviteeSpecifiedLocationType {
+  ASK_INVITEE
+}
+
+"""
+Details about an Event that will take place using a Google Meet / Hangout conference
+"""
+type GoogleConference {
+  """
+  Google conference meeting url
+  """
+  join_url: String!
+
+  """
+  Indicates the current status of the Google conference
+  """
+  status: GoogleConferenceStatus!
+
+  """
+  The event location is a Google Meet or Hangouts conference
+  """
+  type: GoogleConferenceType!
+}
+
+enum GoogleConferenceStatus {
+  INITIATED
+  PROCESSING
+  PUSHED
+  FAILED
+}
+
+enum GoogleConferenceType {
+  GOOGLE_CONFERENCE
+}
+
+"""
+Meeting will take place in a Zoom conference
+"""
+type ZoomConference {
+  """
+  The conference metadata supplied by Zoom
+  """
+  data: Data!
+
+  """
+  Zoom meeting url
+  """
+  join_url: String!
+
+  """
+  Indicates the current status of the Zoom conference
+  """
+  status: ZoomConferenceStatus!
+
+  """
+  The event location is a Zoom conference
+  """
+  type: ZoomConferenceType!
+}
+
+"""
+The conference metadata supplied by Zoom
+"""
+type Data {
+  """
+
+  """
+  extra: Extra
+
+  """
+  The conference ID provided by Zoom
+  """
+  id: String
+
+  """
+  Zoom meeting password
+  """
+  password: String
+  settings: Settings
+}
+
+"""
+
+"""
+type Extra {
+  """
+  Zoom International Dial-in Numbers URL
+  """
+  intlNumbersUrl: String
+}
+
+type Settings {
+  globalDialInNumbers: [GlobalDialInNumbers]
+}
+
+type GlobalDialInNumbers {
+  city: String
+
+  """
+  Country code
+  """
+  country: String
+  countryName: String
+
+  """
+  Phone number
+  """
+  number: String
+  type: String
+}
+
+enum ZoomConferenceStatus {
+  INITIATED
+  PROCESSING
+  PUSHED
+  FAILED
+}
+
+enum ZoomConferenceType {
+  ZOOM_CONFERENCE
+}
+
+"""
+Details about an Event that will take place using a GotoMeeting conference
+"""
+type GoToMeetingConference {
+  """
+  The conference metadata supplied by GoToMeeting
+  """
+  data: GoToMeetingConferenceData!
+
+  """
+  GoToMeeting conference meeting url
+  """
+  join_url: String!
+
+  """
+  Indicates the current status of the GoToMeeting conference
+  """
+  status: GoToMeetingConferenceStatus!
+
+  """
+  The event location is a GoToMeeting conference
+  """
+  type: GoToMeetingType!
+}
+
+"""
+The conference metadata supplied by GoToMeeting
+"""
+type GoToMeetingConferenceData {
+  conferenceCallInfo: String
+
+  """
+  Canonical reference (unique identifier) for the GoToMeeting conference
+  """
+  uniqueMeetingId: Float
+}
+
+enum GoToMeetingConferenceStatus {
+  INITIATED
+  PROCESSING
+  PUSHED
+  FAILED
+}
+
+enum GoToMeetingType {
+  GOTOMEETING
+}
+
+"""
+Meeting will take place in a Microsoft Teams conference
+"""
+type MicrosoftTeamsConference {
+  """
+  The conference metadata supplied by Microsoft Teams
+  """
+  data: MicrosoftTeamsConferenceData!
+
+  """
+  Microsoft Teams meeting url
+  """
+  join_url: String!
+
+  """
+  Indicates the current status of the Microsoft Teams conference
+  """
+  status: MicrosoftTeamsConferenceStatus!
+
+  """
+  The event location is a Zoom conference
+  """
+  type: MicrosoftTeamsConferenceType!
+}
+
+"""
+The conference metadata supplied by Microsoft Teams
+"""
+type MicrosoftTeamsConferenceData {
+  audioConferencing: AudioConferencing
+
+  """
+  The conference ID provided by Microsoft Teams
+  """
+  id: String
+}
+
+type AudioConferencing {
+  conferenceId: String
+  dialinUrl: String
+  tollNumber: String
+}
+
+enum MicrosoftTeamsConferenceStatus {
+  INITIATED
+  PROCESSING
+  PUSHED
+  FAILED
+}
+
+enum MicrosoftTeamsConferenceType {
+  MICROSOFT_TEAMS_CONFERENCE
+}
+
+type ScheduledEventInviteeResource {
+  """
+  An individual who has been invited to meet with a Calendly member
+  """
+  resource: Invitee
+}
+
+"""
+An individual who has been invited to meet with a Calendly member
+"""
+type Invitee {
+  """
+  Link to cancelling the event for the invitee
+  """
+  cancel_url: String!
+
+  """
+  Provides data pertaining to the cancellation of the Invitee
+  """
+  cancellation: Cancellation
+
+  """
+  The moment when the event was created (e.g. "2020-01-02T03:04:05.678Z")
+  """
+  created_at: String!
+
+  """
+  The invitee’s email address
+  """
+  email: String!
+
+  """
+  A reference to the event
+  """
+  event: String!
+
+  """
+  The first name of the Invitee
+  """
+  first_name: String!
+
+  """
+  The last name of the Invitee
+  """
+  last_name: String!
+
+  """
+  The invitee’s name (in human-readable format)
+  """
+  name: String!
+
+  """
+  Link to new invitee, after reschedule
+  """
+  new_invitee: String!
+
+  """
+  Reference to old Invitee instance that got rescheduled
+  """
+  old_invitee: String!
+
+  """
+  Invitee payment
+  """
+  payment: Payment!
+
+  """
+  A collection of the invitee's responses to questions on the event booking confirmation form
+  """
+  questions_and_answers: [QuestionsAndAnswers]!
+
+  """
+  Link to rescheduling the event for the invitee
+  """
+  reschedule_url: String!
+
+  """
+  Indicates if this invitee has rescheduled. If `true`, a reference to the new Invitee instance is provided in the `new_invitee` field.
+  """
+  rescheduled: Boolean!
+
+  """
+  Indicates if the invitee is "active" or "canceled"
+  """
+  status: InviteeStatus!
+
+  """
+  The phone number to use when sending text (SMS) reminders
+  """
+  text_reminder_number: String!
+
+  """
+  Time zone offset (from UTC) to use when displaying time  to the invitee
+  """
+  timezone: String!
+
+  """
+  The UTM and Salesforce tracking parameters associated with an Invitee
+  """
+  tracking: Tracking!
+
+  """
+  The moment when the event was last updated (e.g. "2020-01-02T03:04:05.678Z")
+  """
+  updated_at: String!
+
+  """
+  Canonical reference (unique identifier) for the invitee
+  """
+  uri: String!
+}
+
+"""
+Provides data pertaining to the cancellation of the Invitee
+"""
+type Cancellation {
+  """
+  Name of the person whom canceled
+  """
+  canceled_by: String!
+
+  """
+  Reason that the cancellation occurred
+  """
+  reason: String!
+}
+
+"""
+Invitee payment
+"""
+type Payment {
+  """
+  The amount of the payment
+  """
+  amount: Float!
+
+  """
+  The currency format that the payment is in.
+  """
+  currency: Currency!
+
+  """
+  Unique identifier for the payment
+  """
+  external_id: String!
+
+  """
+  Payment provider
+  """
+  provider: Provider!
+
+  """
+  Indicates whether the payment was successfully processed
+  """
+  successful: Boolean!
+
+  """
+  Terms of the payment
+  """
+  terms: String!
+}
+
+enum Currency {
+  AUD
+  CAD
+  EUR
+  GBP
+  USD
+}
+
+enum Provider {
+  STRIPE
+  PAYPAL
+}
+
+"""
+A response to a question on a booking page form
+"""
+type QuestionsAndAnswers {
+  """
+  The invitee's answer to the question
+  """
+  answer: String!
+
+  """
+  The position of the question in relation to others on the booking form
+  """
+  position: Float!
+
+  """
+  A question on the invitee's booking form
+  """
+  question: String!
+}
+
+enum InviteeStatus {
+  ACTIVE
+  CANCELED
+}
+
+"""
+The UTM and Salesforce tracking parameters associated with an Invitee
+"""
+type Tracking {
+  """
+  The Salesforce record unique identifier
+  """
+  salesforce_uuid: String!
+
+  """
+  The UTM parameter used to track a campaign
+  """
+  utm_campaign: String!
+
+  """
+  UTM content tracking parameter
+  """
+  utm_content: String!
+
+  """
+  The UTM parameter that identifies the type of input (e.g. Cost Per Click (CPC), social media, affiliate or QR code)
+  """
+  utm_medium: String!
+
+  """
+  The UTM parameter that identifies the source (platform where the traffic originates)
+  """
+  utm_source: String!
+
+  """
+  The UTM parameter used to track keywords
+  """
+  utm_term: String!
+}
+
+"""
+Service response
+"""
+type ScheduledEventInvitees {
+  """
+  The set of event invitees matching the criteria
+  """
+  collection: [Invitee]
+  pagination: Pagination
+}
+
+enum EventStatus {
+  ACTIVE
+  CANCELED
+}
+
+"""
+Service response
+"""
+type ScheduledEvents {
+  """
+  The set of scheduled events matching the criteria
+  """
+  collection: [ScheduledEvent]
+  pagination: Pagination
+}
+
+"""
+Service response
+"""
+type UserResource {
+  """
+  Information about the user.
+  """
+  resource: User
+}
+
+"""
+Information about the user.
+"""
+type User {
+  """
+  The URL of the user's avatar (image)
+  """
+  avatar_url: String
+
+  """
+  The moment when the user's record was created (e.g. "2020-01-02T03:04:05.678Z")
+  """
+  created_at: String!
+
+  """
+  A unique reference to the user's current organization
+  """
+  current_organization: String!
+
+  """
+  The user's email address
+  """
+  email: String!
+
+  """
+  The user's name (human-readable format)
+  """
+  name: String!
+
+  """
+  The URL of the user's Calendly landing page (that lists all the user's event types)
+  """
+  scheduling_url: String!
+
+  """
+  The portion of URL for the user's scheduling page (where invitees book sessions), rendered in a human-readable format
+  """
+  slug: String!
+
+  """
+  The time zone offset to use when presenting time to the user
+  """
+  timezone: String!
+
+  """
+  The moment when the user's record was last updated (e.g. "2020-01-02T03:04:05.678Z")
+  """
+  updated_at: String!
+
+  """
+  Canonical reference (unique identifier) for the user
+  """
+  uri: String!
+}
+
+type WebhookSubscriptionResource {
+  """
+  Webhook Subscription Object
+  """
+  resource: WebhookSubscription
+}
+
+"""
+Webhook Subscription Object
+"""
+type WebhookSubscription {
+  """
+  The callback URL to use when the event is triggered
+  """
+  callback_url: String!
+
+  """
+  The moment when the webhook subscription was created (e.g. "2020-01-02T03:04:05.678Z")
+  """
+  created_at: String!
+
+  """
+  The URI of the user who created the webhook subscription
+  """
+  creator: String!
+
+  """
+  A list of events to which the webhook is subscribed
+  """
+  events: [WebhookSubscriptionEvent]!
+
+  """
+  The URI of the organization that's associated with the webhook subscription
+  """
+  organization: String!
+
+  """
+  The date and time the webhook subscription is retried
+  """
+  retry_started_at: String!
+
+  """
+  The scope of the webhook subscription
+  """
+  scope: WebhookSubscriptionScope!
+
+  """
+  Indicates if the webhook subscription is "active" or "disabled"
+  """
+  state: WebhookSubscriptionState!
+
+  """
+  The moment when the webhook subscription was last updated (e.g. "2020-01-02T03:04:05.678Z")
+  """
+  updated_at: String!
+
+  """
+  Canonical reference (unique identifier) for the webhook
+  """
+  uri: String!
+
+  """
+  The URI of the user that's associated with the webhook subscription
+  """
+  user: String!
+}
+
+enum WebhookSubscriptionEvent {
+  INVITEE_CREATED
+  INVITEE_CANCELED
+}
+
+enum WebhookSubscriptionScope {
+  USER
+  ORGANIZATION
+}
+
+enum WebhookSubscriptionState {
+  ACTIVE
+  DISABLED
+}
+
+type WebhookSubscriptions {
+  collection: [WebhookSubscription]
+  pagination: Pagination
+}
+
+type Mutation {
+  """
+  <!-- theme: warning -->
+    > This endpoint has not been released and is for private-use only.
+
+  To submit a request to remove invitee data from all previously booked events in your organization, use this endpoint. Invitee data for upcoming booked events will not be deleted. Requests for data deletion can take up to 7 days to complete.
+
+  Equivalent to POST /data_compliance/deletion/invitees
+  """
+  requestInviteeDataDeletion(emails: [String]!): JSON
+
+  """
+  Invites a user to an organization.
+
+  Equivalent to POST /organizations/{uuid}/invitations
+  """
+  createOrganizationInvitation(
+    input: OrganizationInvitationsInput!
+
+    """
+    The organization's unique identifier
+    """
+    organization_uuid: String!
+  ): OrganizationInvitationResource
+
+  """
+  Creates a single-use scheduling link.
+
+  Equivalent to POST /scheduling_links
+  """
+  createSchedulingLink(input: SchedulingLinksInput!): SchedulingLinkResource
+
+  """
+  Create a Webhook Subscription for an Organization or User.
+
+  Equivalent to POST /webhook_subscriptions
+  """
+  createWebhookSubscription(
+    input: WebhookSubscriptionsInput!
+  ): WebhookSubscriptionResource
+
+  removeUserFromOrganization(organization_membership_uuid: String!): Boolean
+
+  deleteWebhookSubscription(webhook_subscription_uuid: String!): Boolean
+
+  revokeOrganizationInvitation(
+    organization_uuid: String!
+    invitation_uuid: String!
+  ): Boolean
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+  @specifiedBy(
+    url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf"
+  )
+
+input OrganizationInvitationsInput {
+  """
+  The email of the user being invited
+  """
+  email: String!
+}
+
+type SchedulingLinkResource {
+  resource: SchedulingLink!
+}
+
+type SchedulingLink {
+  """
+  Scheduling link url
+  """
+  booking_url: String!
+
+  """
+  A link to the resource that owns this Scheduling Link (currently, this is always an Event Type)
+  """
+  owner: String
+
+  """
+  Resource type (currently, this is always EventType)
+  """
+  owner_type: OwnerType
+}
+
+enum OwnerType {
+  EVENTTYPE
+}
+
+input SchedulingLinksInput {
+  """
+  The max number of events that can be scheduled using this scheduling link.
+  """
+  max_event_count: Int!
+
+  """
+  A link to the resource that owns this Scheduling Link (currently, this is always an Event Type)
+  """
+  owner: String!
+
+  """
+  Resource type (currently, this is always EventType)
+  """
+  owner_type: OwnerType!
+}
+
+input WebhookSubscriptionsInput {
+  """
+  List of user events to subscribe to.
+  """
+  events: [WebhookSubscriptionEvent]!
+
+  """
+  The unique reference to the organization that the webhook will be tied to.
+  """
+  organization: String!
+
+  """
+  Indicates if the webhook subscription scope will be "organization" or "user"
+  """
+  scope: WebhookSubscriptionScope!
+
+  """
+  Optional secret key shared between your application and Calendly. See https://calendly.stoplight.io/docs/api-docs/docs/D-API-Webhook-Signatures.md for additional information.
+  """
+  signing_key: String
+
+  """
+  Canonical reference (unique identifier) for the resource
+  """
+  url: String!
+
+  """
+  The unique reference to the user that the webhook will be tied to.
+  """
+  user: String
+}
