@@ -370,12 +370,12 @@ type EventType {
   """
   The event type's description (formatted with HTML)
   """
-  description_html: String!
+  description_html: String
 
   """
   The event type's description (in non formatted text)
   """
-  description_plain: String!
+  description_plain: String
 
   """
   The length of sessions booked with this event type
@@ -385,7 +385,7 @@ type EventType {
   """
   Contents of a note that may be associated with the event type
   """
-  internal_note: String!
+  internal_note: String
 
   """
   Indicates if the event type is "solo" (belongs to an individual user) or "group"
@@ -400,12 +400,12 @@ type EventType {
   """
   Indicates if the event type is "round robin" (alternates between hosts) or "collective" (invitees pick a time when all participants are available) or "null" (the event type doesn’t consider the availability of a group participants)
   """
-  pooling_type: PoolingType!
+  pooling_type: PoolingType
 
   """
   The profile of the User that's associated with the Event Type (note: some event types don't have user profiles)
   """
-  profile: Profile!
+  profile: Profile
 
   """
   The URL of the user’s scheduling site where invitees book this event type
@@ -570,7 +570,7 @@ type OrganizationInvitation {
   """
   The moment the invitation was last sent (e.g. "2020-01-02T03:04:05.678Z")
   """
-  lastSentAt: String!
+  last_sent_at: String
 
   """
   Canonical reference (unique identifier) for the organization
@@ -749,7 +749,7 @@ type ScheduledEvent {
   """
   The polymorphic base type for an event location that Calendly supports
   """
-  location: Location!
+  location: Location
 
   """
   The event name
@@ -1205,32 +1205,32 @@ type Invitee {
   """
   The first name of the Invitee
   """
-  first_name: String!
+  first_name: String
 
   """
   The last name of the Invitee
   """
-  last_name: String!
+  last_name: String
 
   """
   The invitee’s name (in human-readable format)
   """
-  name: String!
+  name: String
 
   """
   Link to new invitee, after reschedule
   """
-  new_invitee: String!
+  new_invitee: String
 
   """
   Reference to old Invitee instance that got rescheduled
   """
-  old_invitee: String!
+  old_invitee: String
 
   """
   Invitee payment
   """
-  payment: Payment!
+  payment: Payment
 
   """
   A collection of the invitee's responses to questions on the event booking confirmation form
@@ -1255,7 +1255,7 @@ type Invitee {
   """
   The phone number to use when sending text (SMS) reminders
   """
-  text_reminder_number: String!
+  text_reminder_number: String
 
   """
   Time zone offset (from UTC) to use when displaying time  to the invitee
@@ -1265,7 +1265,7 @@ type Invitee {
   """
   The UTM and Salesforce tracking parameters associated with an Invitee
   """
-  tracking: Tracking!
+  tracking: Tracking
 
   """
   The moment when the event was last updated (e.g. "2020-01-02T03:04:05.678Z")
@@ -1290,7 +1290,7 @@ type Cancellation {
   """
   Reason that the cancellation occurred
   """
-  reason: String!
+  reason: String
 }
 
 """
@@ -1325,7 +1325,7 @@ type Payment {
   """
   Terms of the payment
   """
-  terms: String!
+  terms: String
 }
 
 enum Currency {
