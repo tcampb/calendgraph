@@ -479,21 +479,21 @@ type CustomQuestion {
 }
 
 enum CustomQuestionType {
-  STRING
-  TEXT
-  PHONE_NUMBER
-  SINGLE_SELECT
-  MULTI_SELECT
+  string
+  text
+  phone_number
+  single_select
+  multi_select
 }
 
 enum Kind {
-  SOLO
-  GROUP
+  solo
+  group
 }
 
 enum PoolingType {
-  ROUND_ROBIN
-  COLLECTIVE
+  round_robin
+  collective
 }
 
 """
@@ -517,13 +517,13 @@ type Profile {
 }
 
 enum ProfileType {
-  USER
-  TEAM
+  user
+  team
 }
 
 enum EventTypeType {
-  STANDARDEVENTTYPE
-  ADHOCEVENTTYPE
+  StandardEventType
+  AdhocEventType
 }
 
 """
@@ -599,9 +599,9 @@ type OrganizationInvitation {
 }
 
 enum OrganizationInvitationStatus {
-  PENDING
-  ACCEPTED
-  DECLINED
+  pending
+  accepted
+  declined
 }
 
 type OrganizationInvitations {
@@ -646,9 +646,9 @@ type OrganizationMembership {
 }
 
 enum Role {
-  USER
-  ADMIN
-  OWNER
+  user
+  admin
+  owner
 }
 
 """
@@ -867,7 +867,7 @@ type InPersonMeeting {
 }
 
 enum InPersonMeetingType {
-  PHYSICAL
+  physical
 }
 
 """
@@ -886,7 +886,7 @@ type OutboundCall {
 }
 
 enum OutboundCallType {
-  OUTBOUND_CALL
+  outbound_call
 }
 
 """
@@ -905,7 +905,7 @@ type InboundCall {
 }
 
 enum InboundCallType {
-  INBOUND_CALL
+  inbound_call
 }
 
 """
@@ -924,7 +924,7 @@ type CustomLocation {
 }
 
 enum CustomLocationType {
-  CUSTOM
+  custom
 }
 
 """
@@ -943,7 +943,7 @@ type InviteeSpecifiedLocation {
 }
 
 enum InviteeSpecifiedLocationType {
-  ASK_INVITEE
+  ask_invitee
 }
 
 """
@@ -967,14 +967,14 @@ type GoogleConference {
 }
 
 enum GoogleConferenceStatus {
-  INITIATED
-  PROCESSING
-  PUSHED
-  FAILED
+  initiated
+  processing
+  pushed
+  failed
 }
 
 enum GoogleConferenceType {
-  GOOGLE_CONFERENCE
+  google_conference
 }
 
 """
@@ -1054,14 +1054,14 @@ type GlobalDialInNumbers {
 }
 
 enum ZoomConferenceStatus {
-  INITIATED
-  PROCESSING
-  PUSHED
-  FAILED
+  initiated
+  processing
+  pushed
+  failed
 }
 
 enum ZoomConferenceType {
-  ZOOM_CONFERENCE
+  zoom_conference
 }
 
 """
@@ -1102,14 +1102,14 @@ type GoToMeetingConferenceData {
 }
 
 enum GoToMeetingConferenceStatus {
-  INITIATED
-  PROCESSING
-  PUSHED
-  FAILED
+  initiated
+  processing
+  pushed
+  failed
 }
 
 enum GoToMeetingType {
-  GOTOMEETING
+  gotomeeting
 }
 
 """
@@ -1156,14 +1156,14 @@ type AudioConferencing {
 }
 
 enum MicrosoftTeamsConferenceStatus {
-  INITIATED
-  PROCESSING
-  PUSHED
-  FAILED
+  initiated
+  processing
+  pushed
+  failed
 }
 
 enum MicrosoftTeamsConferenceType {
-  MICROSOFT_TEAMS_CONFERENCE
+  microsoft_teams_conference
 }
 
 type ScheduledEventInviteeResource {
@@ -1337,8 +1337,8 @@ enum Currency {
 }
 
 enum Provider {
-  STRIPE
-  PAYPAL
+  stripe
+  paypal
 }
 
 """
@@ -1362,8 +1362,8 @@ type QuestionsAndAnswers {
 }
 
 enum InviteeStatus {
-  ACTIVE
-  CANCELED
+  active
+  canceled
 }
 
 """
@@ -1373,32 +1373,32 @@ type Tracking {
   """
   The Salesforce record unique identifier
   """
-  salesforce_uuid: String!
+  salesforce_uuid: String
 
   """
   The UTM parameter used to track a campaign
   """
-  utm_campaign: String!
+  utm_campaign: String
 
   """
   UTM content tracking parameter
   """
-  utm_content: String!
+  utm_content: String
 
   """
   The UTM parameter that identifies the type of input (e.g. Cost Per Click (CPC), social media, affiliate or QR code)
   """
-  utm_medium: String!
+  utm_medium: String
 
   """
   The UTM parameter that identifies the source (platform where the traffic originates)
   """
-  utm_source: String!
+  utm_source: String
 
   """
   The UTM parameter used to track keywords
   """
-  utm_term: String!
+  utm_term: String
 }
 
 """
@@ -1522,7 +1522,7 @@ type WebhookSubscription {
   """
   A list of events to which the webhook is subscribed
   """
-  events: [WebhookSubscriptionEvent]!
+  events: [String]!
 
   """
   The URI of the organization that's associated with the webhook subscription
@@ -1560,19 +1560,14 @@ type WebhookSubscription {
   user: String!
 }
 
-enum WebhookSubscriptionEvent {
-  INVITEE_CREATED
-  INVITEE_CANCELED
-}
-
 enum WebhookSubscriptionScope {
-  USER
-  ORGANIZATION
+  user
+  organization
 }
 
 enum WebhookSubscriptionState {
-  ACTIVE
-  DISABLED
+  active
+  disabled
 }
 
 type WebhookSubscriptions {
@@ -1668,7 +1663,7 @@ type SchedulingLink {
 }
 
 enum OwnerType {
-  EVENTTYPE
+  EventType
 }
 
 input SchedulingLinksInput {
@@ -1692,7 +1687,7 @@ input WebhookSubscriptionsInput {
   """
   List of user events to subscribe to.
   """
-  events: [WebhookSubscriptionEvent]!
+  events: [String]!
 
   """
   The unique reference to the organization that the webhook will be tied to.
